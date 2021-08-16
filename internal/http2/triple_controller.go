@@ -42,7 +42,7 @@ import (
 	"github.com/dubbogo/triple/internal/message"
 	"github.com/dubbogo/triple/internal/status"
 	"github.com/dubbogo/triple/internal/stream"
-	"github.com/dubbogo/triple/internal/tools"
+	"github.com/dubbogo/triple/internal/tool"
 	"github.com/dubbogo/triple/pkg/common"
 	"github.com/dubbogo/triple/pkg/common/constant"
 	"github.com/dubbogo/triple/pkg/config"
@@ -256,7 +256,7 @@ todo how to deal with error in this procedure gracefully is to be discussed next
 */
 func (hc *TripleController) newServerStreamFromTripleHeader(ctx context.Context, path string, header http.Header,
 	rpcService interface{}, pool gxsync.WorkerPool) (stream.Stream, error) {
-	interfaceKey, methodName, err := tools.GetServiceKeyAndUpperCaseMethodNameFromPath(path)
+	interfaceKey, methodName, err := tool.GetServiceKeyAndUpperCaseMethodNameFromPath(path)
 	if err != nil {
 		return nil, err
 	}

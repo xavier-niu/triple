@@ -29,7 +29,7 @@ import (
 
 import (
 	"github.com/dubbogo/triple/internal/http2"
-	"github.com/dubbogo/triple/internal/tools"
+	"github.com/dubbogo/triple/internal/tool"
 	"github.com/dubbogo/triple/pkg/common"
 	"github.com/dubbogo/triple/pkg/common/constant"
 	"github.com/dubbogo/triple/pkg/config"
@@ -56,7 +56,7 @@ type TripleClient struct {
 // @impl must have method: GetDubboStub(cc *dubbo3.TripleConn) interface{}, to be capable with grpc
 // @opt is used to init http2 controller, if it's nil, use the default config
 func NewTripleClient(impl interface{}, opt *config.Option) (*TripleClient, error) {
-	opt = tools.AddDefaultOption(opt)
+	opt = tool.AddDefaultOption(opt)
 	h2Controller, err := http2.NewTripleController(opt)
 	if err != nil {
 		opt.Logger.Errorf("NewTripleController err = %v", err)
@@ -83,7 +83,7 @@ func (t *TripleClient) Invoke(methodName string, in []reflect.Value, reply inter
 		if res[1].IsValid() && res[1].Interface() != nil {
 			return res[1].Interface().(error)
 		}
-		_ = tools.ReflectResponse(res[0], reply)
+		_ = tool.ReflectResponse(res[0], reply)
 	} else {
 		ctx := in[0].Interface().(context.Context)
 		interfaceKey := ctx.Value(constant.InterfaceKey).(string)

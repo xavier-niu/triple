@@ -26,7 +26,7 @@ import (
 )
 
 import (
-	"github.com/dubbogo/triple/internal/tools"
+	"github.com/dubbogo/triple/internal/tool"
 	"github.com/dubbogo/triple/pkg/common"
 	"github.com/dubbogo/triple/pkg/common/constant"
 )
@@ -95,7 +95,7 @@ func (h *HessianCodeC) Unmarshal(data []byte, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	return tools.ReflectResponse(val, v)
+	return tool.ReflectResponse(val, v)
 }
 
 // NewHessianCodec returns new HessianCodeC

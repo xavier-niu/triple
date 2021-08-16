@@ -23,8 +23,8 @@ import (
 
 import (
 	"github.com/dubbogo/triple/internal/http2"
-	"github.com/dubbogo/triple/internal/path"
-	"github.com/dubbogo/triple/internal/tools"
+	"github.com/dubbogo/triple/internal/pathext"
+	"github.com/dubbogo/triple/internal/tool"
 	"github.com/dubbogo/triple/pkg/config"
 	triHttp2 "github.com/dubbogo/triple/pkg/http2"
 	triHttp2Conf "github.com/dubbogo/triple/pkg/http2/config"
@@ -43,7 +43,7 @@ type TripleServer struct {
 // NewTripleServer can create Server with url and some user impl providers stored in @serviceMap
 // @serviceMap should be sync.Map: "interfaceKey" -> Dubbo3GrpcService
 func NewTripleServer(serviceMap *sync.Map, opt *config.Option) *TripleServer {
-	opt = tools.AddDefaultOption(opt)
+	opt = tool.AddDefaultOption(opt)
 	return &TripleServer{
 		rpcServiceMap: serviceMap,
 		done:          make(chan struct{}, 1),
@@ -63,7 +63,7 @@ func (t *TripleServer) Start() {
 
 	t.http2Server = triHttp2.NewServer(t.opt.Location, triHttp2Conf.ServerConfig{
 		Logger:        t.opt.Logger,
-		PathExtractor: path.NewDefaultExtractor(),
+		PathExtractor: pathext.NewDefaultExtractor(),
 	})
 
 	tripleCtl, err := http2.NewTripleController(t.opt)

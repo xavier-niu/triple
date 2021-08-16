@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package tools
+package tool
 
 import (
 	"testing"

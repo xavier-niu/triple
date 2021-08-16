@@ -36,7 +36,7 @@ import (
 	"github.com/dubbogo/triple/internal/codes"
 	"github.com/dubbogo/triple/internal/message"
 	"github.com/dubbogo/triple/internal/status"
-	"github.com/dubbogo/triple/internal/tools"
+	"github.com/dubbogo/triple/internal/tool"
 	"github.com/dubbogo/triple/pkg/common"
 	"github.com/dubbogo/triple/pkg/common/constant"
 	"github.com/dubbogo/triple/pkg/config"
@@ -111,7 +111,7 @@ func (p *unaryProcessor) processUnaryRPC(buf bytes.Buffer, service interface{}, 
 	var reply interface{}
 	var err error
 
-	_, methodName, e := tools.GetServiceKeyAndUpperCaseMethodNameFromPath(header.GetPath())
+	_, methodName, e := tool.GetServiceKeyAndUpperCaseMethodNameFromPath(header.GetPath())
 	if e != nil {
 		return nil, e
 	}
@@ -223,6 +223,7 @@ func newStreamingProcessor(s *serverStream, desc grpc.StreamDesc, serializer com
 }
 
 // runRPC called by stream
+// TODO: ctx.Done()
 func (sp *streamingProcessor) runRPC(ctx context.Context) error {
 	serverUserStream := newServerUserStream(sp.stream, sp.twoWayCodec, sp.opt)
 
